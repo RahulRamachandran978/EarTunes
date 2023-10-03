@@ -12,7 +12,7 @@ async function fetchCategories() {
     throw new Error(`Error finding categories: ${error.message}`);
   }
 }
-
+fuck
 async function addCategory(name) {
   try {
     const isCategoryExist = await categoryDatabase.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
