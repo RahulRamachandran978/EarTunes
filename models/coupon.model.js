@@ -5,6 +5,12 @@ const cartDatabase = require('../schema/cart.schema');
 async function addCoupen(dataBody) {
   try {
     const { couponname, couponDescription, discount, validFrom, validUntil, minimumPurchase } = dataBody;
+   
+    const existingCoupon = await couponDatabase.findOne({ couponname: couponname });
+    if (existingCoupon) {
+      throw new Error('Coupon name already exists');
+    }
+    
     const randomThreeDigitNumber = Math.floor(100 + Math.random() * 900);
     const code = `${couponname.split(' ').join('')}${randomThreeDigitNumber}`.toUpperCase();
     const coupon = new couponDatabase({
