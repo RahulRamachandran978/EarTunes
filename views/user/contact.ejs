@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  
+  <head>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+
+  <%- include("../partials/user-header") %>
+
+</head>
+
+<body>
+  <%- include("./components/preloading.ejs") %>
+  <%- include("./layouts/navbar") %>
+  <main class="main">
+    <div class="page-header breadcrumb-wrap">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="index.html" rel="nofollow">Home</a>
+          <span></span> Contact us
+        </div>
+      </div>
+    </div>
+    <section class="hero-2 bg-green">
+      <div class="hero-content">
+        <div class="container">
+          <div class="text-center">
+            <h4 class="text-brand mb-20">Get in touch</h4>
+            <h1 class="mb-20 wow fadeIn animated font-xxl fw-900">
+              Talk to a <br><span class="text-style-1">Human</span>
+            </h1>
+            <p class="w-50 m-auto mb-50 wow fadeIn animated">You're not going to hit a ridiculously long phone menu when you call us. Your email isn't going to the inbox abyss, never to be seen or heard from again. At choice screening we provide the exceptional service we'd want to experience ourselves</p>
+            <p class="wow fadeIn animated">
+              <a class="btn btn-brand btn-lg font-weight-bold text-white border-radius-5 btn-shadow-brand hover-up" href="/about">About Us</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- <section class="pt-50 pb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-8 col-lg-10 m-auto">
+            <div class="contact-from-area padding-20-row-col wow FadeInUp">
+              <h3 class="mb-10 text-center">Drop Us a Line</h3>
+              <p class="text-muted mb-30 text-center font-sm">Feel free to contact us!</p>
+              <form class="contact-form-style text-center" id="googleform">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6">
+                    <div class="input-style mb-20">
+                      <input name="NAME" id="NAME" placeholder="First Name" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    <div class="input-style mb-20">
+                      <input name="eMAIL" id="eMAIL" placeholder="Your Email" type="email">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    <div class="input-style mb-20">
+                      <input name="PHONE" id="PHONE" placeholder="Your Phone" type="tel">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    <div class="input-style mb-20">
+                      <input name="SUBJECT" id="SUBJECT" placeholder="Subject" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                    <div class="textarea-style mb-30">
+                      <textarea name="MESSAGE" id="MESSAGE" placeholder="Message"></textarea>
+                    </div>
+                    <button class="submit submit-auto-width" type="submit" onclick="return btnClick()">Send message</button>
+                  </div>
+                </div>
+              </form>
+              <p class="form-messege"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+  </main>
+  <%- include("./layouts/footer.ejs")%>
+
+  <script>
+    
+function btnClick(){
+    let btn;
+    var nameField = document.getElementById('NAME').value.trim();
+    var emailField = document.getElementById('eMAIL').value.trim();
+    var phoneField = document.getElementById('PHONE').value.trim();
+    var subjectField = document.getElementById('SUBJECT').value.trim();
+    var msgField = document.getElementById('MESSAGE').value.trim();
+
+    if(nameField === "" || emailField === "" || phoneField === "" || msgField === "" || subjectField === ""){
+        btn = false;
+        // alert('All fields are mandatory !');
+        swal.fire({
+          title: 'Not today!',
+          text: 'Fields cannot be empty!',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1300
+        });
+    }
+    else if (!/^\d+$/.test(phoneField)) {
+      swal.fire({
+          title: 'Invalid input',
+          text: 'Phone number can only contain numbers',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1300
+        });
+        btn = false;
+    }
+    else if (!/^([a-zA-Z0-9\._]+)@([a-zA-Z0-9]+).([a-z]+).([a-z]+)?$/.test(emailField)) {
+      swal.fire({
+          title: 'Invalid input',
+          text: 'Please enter a valid email address',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1300
+        });
+        btn = false;
+    }
+
+    return btn;
+}
+
+    $("#googleform").submit((e) => {
+      e.preventDefault()
+      $.ajax({
+        url: "https://script.google.com/macros/s/AKfycby_bqd9fj50OB3XAHQ5X2--BmBSdIX3dxcUdYQDi0hHlxpR_fYs6PsHgvBC9SDAHax4/exec",
+        data: $("#googleform").serialize(),
+        method: "post",
+        success: function(response) {
+          swal.fire({
+            title:'success',
+            text:'Detail submitted successfully',
+            icon: 'success',
+            showConfirmButton:false,
+            timer:1300
+          })
+          window.location.href="/";
+
+        },
+        error: function(err) {
+          swal.fire({
+            title:'Error',
+            text: 'Something Error!!',
+            icon: error,
+            showConfirmButton: false,
+            timer: 1300
+          })
+
+        }
+      })
+    })
+  </script>
+  <%- include("./script/script.ejs") %>
+</body>
+
+</html>

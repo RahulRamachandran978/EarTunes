@@ -1,0 +1,143 @@
+<h3 class="section-title style-1 mb-30 mt-30">Reviews (<%=reviews.length %>)</h3>
+<div class="comments-area style-2">
+  <div class="row">
+    <div class="col-lg-8">
+      <% if(reviews.length>0) { %>
+      <h4 class="mb-30" style="color: gold;">Customer Reviews</h4>
+      <div class="comment-list" style="max-height: 500px; overflow-y: auto;">
+        <% reviews.forEach(review => { %>
+        <div class="single-comment justify-content-between d-flex">
+          <div class="user justify-content-between d-flex">
+            <div class="thumb text-center">
+              <!-- <img src="/user/assets/imgs/page/avatar-6.jpg" alt=""> -->
+              <img src="<%= review.reviewer.profileimage %>" alt="">
+              <h6><a href="#" style="color: aliceblue;"><%= review.reviewer.username %></a></h6>
+            </div>
+            <div class="desc">
+              <% const rating=review.rating, maxRating = 5 %>
+              <div class="product-rate d-inline-block">
+                <div class="stars">
+                  <% for (let i = 1; i <= maxRating; i++) { %>
+                  <% if (i <= rating) { %>
+                  <i style="color: orange;" class="fa-solid fa-star"></i>
+                  <% } %>
+                  <% } %>
+                </div>
+              </div>
+              <p><%= review.reviewText %></p>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <% const options = { year: 'numeric', month: 'long', day: 'numeric' }; %>
+                  <p class="font-xs mr-30"><%= new Date(review.reviewDate).toLocaleDateString('en-US', options) %></p>
+                  <% if (userId && review.reviewer._id.toString() === userId) { %>
+                  <a class="text-brand btn-reply" onclick="deleteReview('<%= review._id %>')">Delete<i class="fi-rs-arrow-right"></i></a>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else{%>
+      <h4 class="mb-30" style="color: gold;">No reviews yet!</h4>
+      <% } %>
+    </div>
+  </div>
+</div>
+<script>
+  async function deleteReview(reviewId) {
+    try {
+      const confirmed = await Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: 'You are about to delete this review. This action cannot be undone!',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+      });
+
+      if (confirmed.isConfirmed) {
+        const response = await fetch(`/delete-review/${reviewId}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          await Swal.fire({
+            icon: 'success',
+            title: 'Review Deleted!',
+            text: 'The review has been deleted successfully.',
+            timer: 1300,
+            showConfirmButton: false,
+          });
+          window.location.reload();
+        } else {
+          const errorResponse = await response.json();
+          await Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: errorResponse.message,
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error deleting review:', error);
+      await Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'An error occurred while deleting the review. Please try again later.',
+      });
+    }
+  }
+</script>
+        <!-- <div class="col-lg-4">
+            <h4 class="mb-30">Customer reviews</h4>
+            <div class="d-flex mb-30">
+                <div class="product-rate d-inline-block mr-15">
+                    <div class="product-rating" style="width:90%">
+                    </div>
+                </div>
+                <h6>4.8 out of 5</h6>
+            </div>
+            <div class="progress">
+                <span>5 star</span>
+                <div class="progress-bar" role="progressbar"
+                    style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                    aria-valuemax="100">50%
+                </div>
+            </div>
+            <div class="progress">
+                <span>4 star</span>
+                <div class="progress-bar" role="progressbar"
+                    style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
+                    aria-valuemax="100">25%
+                </div>
+            </div>
+            <div class="progress">
+                <span>3 star</span>
+                <div class="progress-bar" role="progressbar"
+                    style="width: 45%;" aria-valuenow="45" aria-valuemin="0"
+                    aria-valuemax="100">45%
+                </div>
+            </div>
+            <div class="progress">
+                <span>2 star</span>
+                <div class="progress-bar" role="progressbar"
+                    style="width: 65%;" aria-valuenow="65" aria-valuemin="0"
+                    aria-valuemax="100">65%
+                </div>
+            </div>
+            <div class="progress mb-30">
+                <span>1 star</span>
+                <div class="progress-bar" role="progressbar"
+                    style="width: 85%;" aria-valuenow="85" aria-valuemin="0"
+                    aria-valuemax="100">85%
+                </div>
+            </div>
+            <a href="#" class="font-xs text-muted">How are ratings
+                calculated?</a>
+        </div>
+    </div>
+</div> -->

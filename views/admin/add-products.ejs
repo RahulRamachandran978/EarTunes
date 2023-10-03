@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <%- include("../partials/admin-header") %>
+</head>
+<body>
+    <div class="screen-overlay"></div>
+    <!-- aside -->
+    <%- include("./layouts/sidebar.ejs") %>
+    <main class="main-wrap">
+    <%- include("./layouts/header.ejs") %>
+    <%- include("./components/products/add-new-products.ejs") %>
+    <%- include("./layouts/admin-footer.ejs") %>
+  
+</main>
+<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
+<%- include("./components/script/script.ejs") %>
+<!-- ajax/axios -->
+<script src="/admins/assets/js/vendors/ajax/productAdd.js"></script>
+</body>
+
+</html>
