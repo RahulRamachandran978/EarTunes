@@ -69,7 +69,7 @@ console.clear();
 
 async function startServer(){
   await mongoconnect();
-  app.listen(PORT,ip,()=>{
+  app.listen(PORT,()=>{
     console.log(`Listening on http://localhost:${PORT}🚀`);
   });
 }
