@@ -93,16 +93,16 @@ searchInput.addEventListener('keyup', (event) => {
                         <div class="header-right">
                             <div class="search-style-2">
                                  <form> 
-                                    <select class="select-active" id="categorySelect">
+                                    <!-- <select class="select-active" id="categorySelect">
                                         <option disabled selected>All Categories</option>
-                                        <% categories.forEach(category=> { %>
-                                            <% if (category.active) { %>
-                                                <option value="<%= category._id %>">
-                                                    <%= category.name %>
+                                        <%# categories.forEach(category=> { %>
+                                            <%# if (category.active) { %>
+                                                <option value="<%#= category._id %>">
+                                                    <%#= category.name %>
                                                 </option>
-                                                <% } %>
-                                                    <% }) %>
-                                    </select>
+                                                <%# } %>
+                                                    <%# }) %>
+                                    </select> -->
                                      <input type="text" id="searchInput" placeholder="Search for items...">
 
                                 </form> 
