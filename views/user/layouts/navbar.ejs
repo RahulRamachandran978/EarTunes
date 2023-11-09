@@ -18,9 +18,8 @@ searchInput.addEventListener('keyup', (event) => {
             body: JSON.stringify(data)
         }).then(async (res) => {
             res = await res.json();
-
             if (res.success) {
-                window.location.href = '/search';
+                window.location.href ='/search';
             } else {
 
             }
@@ -104,9 +103,7 @@ searchInput.addEventListener('keyup', (event) => {
                                                     <%# }) %>
                                     </select> -->
                                      <input type="text" id="searchInput" placeholder="Search for items...">
-
                                 </form> 
-
                             </div>
                             <div class="header-action-right">
                                 <div class="header-action-2">
